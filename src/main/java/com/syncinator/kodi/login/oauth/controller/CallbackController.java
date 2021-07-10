@@ -51,7 +51,9 @@ public class CallbackController {
 			if (state != null) {
 				String pin = state.toLowerCase();
 				Pin storedPin = pinCache.get(pin);
+				logger.info("=== Wilber === STARTING CALLBACK WITH storedPin");
 				if (storedPin != null) {
+					logger.info("=== Wilber === STARTING CALLBACK PROCESSING storedPin");
 					Provider connector = context.getBean(Provider.NAME_PREFIX + storedPin.getProvider(), Provider.class);
 					Map<String,Object> tokens = connector.tokens(Provider.GRANT_TYPE_AUTHORIZATION_CODE, code);
 					logger.info("=== Wilber === getting tokens");
