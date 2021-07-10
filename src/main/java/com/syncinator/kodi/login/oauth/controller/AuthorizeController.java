@@ -23,6 +23,7 @@ public class AuthorizeController {
 	
 	@Autowired
 	private ApplicationContext context;
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping("/signin/{pin}")
 	public String signin(@PathVariable String pin, Model model, HttpServletRequest request) throws IOException {
@@ -31,10 +32,14 @@ public class AuthorizeController {
 	
 	@RequestMapping("/authorize")
 	public String login(@RequestParam String pin, Model model, HttpServletRequest request) throws IOException {
+		logger.info("=== Wilber === starting authorizing");
+
 		Cache<String, Pin> pinCache = KodiLoginCacheManager.getPinCache();
 		pin = pin.replace('O', '0');
+		logger.info("=== Wilber === processing pin"+pin);
 		Pin storedPin = pinCache.get(pin.toLowerCase());
 		if (storedPin != null && storedPin.getOwner().equals(Utils.getRemoteAddress(request))) {
+			logger.info("=== Wilber === authorizing with connector");
 			Provider connector = context.getBean(Provider.NAME_PREFIX + storedPin.getProvider(), Provider.class);
 			return "redirect:" + connector.authorize(pin);
 		}
