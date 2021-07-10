@@ -44,7 +44,9 @@ public class CallbackController {
 			@RequestParam(required=false) String error,
 			@RequestParam(required=false, name="error_description") String errorDescription,
 			Model model) throws Exception {
+		logger.info("=== Wilber === STARTING CALLBACK");
 		if (error == null) {
+			logger.info("=== Wilber === STARTING CALLBACK WITHOUT ERROR");
 			Cache<String, Pin> pinCache = KodiLoginCacheManager.getPinCache();
 			if (state != null) {
 				String pin = state.toLowerCase();
@@ -68,6 +70,7 @@ public class CallbackController {
 				model.addAttribute("errorCode", "failure.code.3");
 			}
 		} else {
+			logger.info("=== Wilber === STARTING CALLBACK HAVING ERROR");
 			model.addAttribute("errorText", error + ": " + errorDescription);
 		}
 		return "auth-failure";
