@@ -22,6 +22,8 @@ import com.syncinator.kodi.login.KodiLoginCacheManager;
 import com.syncinator.kodi.login.controller.ReportController;
 import com.syncinator.kodi.login.model.Pin;
 import com.syncinator.kodi.login.oauth.provider.Provider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 @RequestMapping("/callback")
@@ -29,6 +31,7 @@ public class CallbackController {
 
 	@Autowired
 	private ApplicationContext context;
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	private ReportController reportController;
@@ -49,10 +52,13 @@ public class CallbackController {
 				if (storedPin != null) {
 					Provider connector = context.getBean(Provider.NAME_PREFIX + storedPin.getProvider(), Provider.class);
 					Map<String,Object> tokens = connector.tokens(Provider.GRANT_TYPE_AUTHORIZATION_CODE, code);
+					logger.info("=== Wilber === getting tokens");
 					if (tokens != null) {
+						logger.info("=== Wilber === getting tokens OK");
 						storedPin.setAccessToken(tokens);
 						return "redirect:auth-success";
 					} else {
+						logger.info("=== Wilber === getting tokens FAILED");
 						model.addAttribute("errorCode", "failure.code.2");
 					}
 				} else {
