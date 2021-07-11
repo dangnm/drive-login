@@ -58,7 +58,7 @@ public class CallbackController {
 					Map<String,Object> tokens = connector.tokens(Provider.GRANT_TYPE_AUTHORIZATION_CODE, code);
 					logger.info("=== Wilber === getting tokens");
 					if (tokens != null) {
-						logger.info("=== Wilber === getting tokens OK " + tokens);
+						// logger.info("=== Wilber === getting tokens OK " + tokens);
 						storedPin.setAccessToken(tokens);
 						return "redirect:auth-success";
 					} else {

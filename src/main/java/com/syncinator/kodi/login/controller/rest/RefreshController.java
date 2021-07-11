@@ -37,12 +37,12 @@ public class RefreshController {
 		logger.info("Wilber debug STARTTING REFRESHING");
 		logger.info("Provider: " + provider);
 		if (StringUtils.isEmpty(provider) || StringUtils.isEmpty(refreshToken)) {
-			logger.error(refreshToken);
+			// logger.error(refreshToken);
 			response.sendError(HttpStatus.BAD_REQUEST.value(), "Provider and refresh token required");
 			return null;
 		}
 		Provider connector = context.getBean(Provider.NAME_PREFIX + provider, Provider.class);
-		logger.info("Wilber debug REFRESHING: " + refreshToken);
+		// logger.info("Wilber debug REFRESHING: " + refreshToken);
 		return connector.tokens(Provider.GRANT_TYPE_REFRESH_TOKEN, refreshToken);
 	}
 

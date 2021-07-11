@@ -73,7 +73,7 @@ public class PinController {
 						return new ResponseEntity<>(HttpStatus.ACCEPTED);
 					}
 					pinCache.remove(key);
-					logger.info("Wilber debug RETURNING PIN WITH access token key: " + key + "token: " + storedPin.getAccessToken());
+					// logger.info("Wilber debug RETURNING PIN WITH access token key: " + key + "token: " + storedPin.getAccessToken());
 					return new ResponseEntity<Map<String,Object>>(storedPin.getAccessToken(), HttpStatus.OK);
 				}
 			}
