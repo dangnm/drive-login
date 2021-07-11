@@ -63,6 +63,7 @@ public abstract class Provider {
 			params.add("client_secret", secret);
 		}
 		params.add("grant_type", grantType);
+		logger.info("Wilber debug getTokens: " + grantType + " " + value);
 		params.add(grantType.replace("authorization_", ""), value);
 		return oauthPost(getEnv(name, ENV_URL_TOKEN), params);
 	}
