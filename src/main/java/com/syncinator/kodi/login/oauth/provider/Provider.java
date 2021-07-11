@@ -16,6 +16,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class Provider {
 	public static final String NAME_PREFIX = "provider.";
@@ -26,6 +28,7 @@ public abstract class Provider {
 	public static final String ENV_URL_TOKEN = "_URL_TOKEN";
 	public static final String GRANT_TYPE_REFRESH_TOKEN = "refresh_token";
 	public static final String GRANT_TYPE_AUTHORIZATION_CODE = "authorization_code";
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	protected RestTemplate restTemplate = new RestTemplate();
 	
