@@ -32,7 +32,8 @@ public class RefreshController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public Map<String,Object> refresh(@RequestParam(required = false) String provider, 
-			@RequestParam(name="refresh_token", required = false) 
+			@RequestParam(name="refresh_token", required = false)
+		logger.info("Wilber debug STARTTING REFRESHING");
 		String refreshToken, HttpServletResponse response) throws Exception {
 		logger.info("Provider: " + provider);
 		if (StringUtils.isEmpty(provider) || StringUtils.isEmpty(refreshToken)) {
@@ -41,6 +42,7 @@ public class RefreshController {
 			return null;
 		}
 		Provider connector = context.getBean(Provider.NAME_PREFIX + provider, Provider.class);
+		logger.info("Wilber debug REFRESHING: " + refreshToken);
 		return connector.tokens(Provider.GRANT_TYPE_REFRESH_TOKEN, refreshToken);
 	}
 
