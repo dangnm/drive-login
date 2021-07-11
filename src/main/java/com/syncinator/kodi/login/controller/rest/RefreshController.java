@@ -32,9 +32,9 @@ public class RefreshController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public Map<String,Object> refresh(@RequestParam(required = false) String provider, 
-			@RequestParam(name="refresh_token", required = false)
-		logger.info("Wilber debug STARTTING REFRESHING");
+			@RequestParam(name="refresh_token", required = false) 
 		String refreshToken, HttpServletResponse response) throws Exception {
+		logger.info("Wilber debug STARTTING REFRESHING");
 		logger.info("Provider: " + provider);
 		if (StringUtils.isEmpty(provider) || StringUtils.isEmpty(refreshToken)) {
 			logger.error(refreshToken);
