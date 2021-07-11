@@ -62,19 +62,23 @@ public class PinController {
 		String key = pin.toLowerCase();
 		Pin storedPin = pinCache.get(key);
 		String auth = request.getHeader("authorization");
+		logger.info("Wilber debug GETTING PIN: " + pin);
 		if (storedPin != null && auth != null && storedPin.getOwner().equals(Utils.getRemoteAddress(request))) {
 			String[] data = auth.split(" ");
 			if (data.length == 2 && data[0].equalsIgnoreCase("basic")) {
 				String[] credentials = new String(Base64.decodeBase64(data[1].getBytes())).split(":");
 				if (credentials.length > 1 && storedPin.getPassword().equals(credentials[1])) {
 					if (storedPin.getAccessToken() == null) {
+						logger.info("Wilber debug RETURNING PIN NO access token");
 						return new ResponseEntity<>(HttpStatus.ACCEPTED);
 					}
 					pinCache.remove(key);
+					logger.info("Wilber debug RETURNING PIN WITH access token key: " + key + "token: " + storedPin.getAccessToken());
 					return new ResponseEntity<Map<String,Object>>(storedPin.getAccessToken(), HttpStatus.OK);
 				}
 			}
 		}
+		logger.info("Wilber debug NOT FOUND PIN: " + pin);
 		response.sendError(HttpStatus.NOT_FOUND.value());
 		return null;
 	}
